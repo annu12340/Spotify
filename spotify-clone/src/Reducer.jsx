@@ -1,4 +1,5 @@
 export const initialState = {
+  
    user: null,
    playlists: [],
    spotify: null,
@@ -7,7 +8,6 @@ export const initialState = {
    playing: false,
    item: null,
 };
-
 const Reducer = (state, action) => {
    console.log(action);
    switch (action.type) {

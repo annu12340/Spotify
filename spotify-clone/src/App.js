@@ -26,18 +26,44 @@ function App() {
          dispatch({
             type: "SET_TOKEN",
             token: _token,
-          });
+         });
+
+         s.getPlaylist("37i9dQZEVXcJZyENOWUFo7").then((response) =>
+            dispatch({
+               type: "SET_DISCOVER_WEEKLY",
+               discover_weekly: response,
+            })
+         );
+
+         s.getMyTopArtists().then((response) =>
+            dispatch({
+               type: "SET_TOP_ARTISTS",
+               top_artists: response,
+            })
+         );
+
+         dispatch({
+            type: "SET_SPOTIFY",
+            spotify: s,
+         });
+
          s.getMe().then((user) => {
             dispatch({
                type: "SET_USER",
                user,
             });
          });
-      }
-   }, []);
 
+         s.getUserPlaylists().then((playlists) => {
+            dispatch({
+               type: "SET_PLAYLISTS",
+               playlists,
+            });
+         });
+      }
+   }, [token, dispatch]);
    console.log("user", user);
-   return <div className='app'>{token ? <User /> : <Login />}</div>;
+   return <div className='app'>{token ? <User spotify={s} /> : <Login />}</div>;
 }
 
 export default App;
